@@ -3,6 +3,7 @@
 ## Project based on bluuweb directs on Youtube
 
 - [See day 1 on YouTube](https://www.youtube.com/watch?v=_4SGcAVB5kM)
+- [See day 2 on YouTube](https://www.youtube.com/watch?v=j6fRFCedsdA)
 
 ===============================================
 
