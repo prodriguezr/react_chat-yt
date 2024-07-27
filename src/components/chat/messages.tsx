@@ -1,3 +1,13 @@
+import { MessagesHeader } from './messages_header';
+import { MessagesFooter } from './messages_footer';
+import { MessagesChat } from './messages_chat';
+
 export const Messages = () => {
-  return <div className="bg-green-900 min-h-screen">Messages</div>;
+  return (
+    <article className="grid grid-rows-[auto_1fr_auto] h-screen">
+      <MessagesHeader />
+      <MessagesChat />
+      <MessagesFooter />
+    </article>
+  );
 };

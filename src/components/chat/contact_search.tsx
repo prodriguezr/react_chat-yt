@@ -48,7 +48,7 @@ export const ContactSearch = () => {
         />
         <Button
           type="submit"
-          className="w-full text-[12px] bg-indigo-900 hover:bg-indigo-700"
+          className="w-full text-[12px] bg-indigo-700 hover:bg-indigo-900"
         >
           Search Contact
         </Button>
