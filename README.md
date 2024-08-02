@@ -5,6 +5,7 @@
 - [See day 1 on YouTube](https://www.youtube.com/watch?v=_4SGcAVB5kM)
 - [See day 2 on YouTube](https://www.youtube.com/watch?v=j6fRFCedsdA)
 - [See day 3 on YouTube](https://www.youtube.com/watch?v=3HumQzPdtoQ)
+- [See day 4 on YouTube](https://www.youtube.com/watch?v=Xtc7GmBuo8E&t=1988s)
 
 ===============================================
 

@@ -20,8 +20,20 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { useAuth, useStorage } from 'reactfire';
+import {
+  createUserWithEmailAndPassword,
+  AuthError,
+  updateProfile,
+} from 'firebase/auth';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { userLoadingStore } from '@/store/loading_store';
 
 export const Register = () => {
+  const auth = useAuth();
+  const storage = useStorage();
+  const { loading, setLoading } = userLoadingStore();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,7 +46,48 @@ export const Register = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    try {
+      setLoading(true);
+
+      // 1.- Create User
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+
+      console.log('User created');
+
+      // 2. Save avatar
+      const storageRef = ref(storage, 'avatars/' + user.uid + '.jpg');
+
+      await uploadBytes(storageRef, values.photoURL);
+
+      // 3. Get photoUrl
+      const photoURL = await getDownloadURL(storageRef);
+
+      await updateProfile(user, {
+        displayName: values.displayName,
+        photoURL,
+        //photoURL: 'https://randomuser.me/api/portraits/men/59.jpg',
+      });
+
+      console.log('Profile updated');
+    } catch (error) {
+      const firebaseError = error as AuthError;
+      console.log(firebaseError.code);
+
+      if (firebaseError.code === 'auth/email-already-in-use') {
+        form.setError('email', {
+          type: 'manual',
+          message: 'Email already in use',
+        });
+
+        return;
+      }
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -121,7 +174,9 @@ export const Register = () => {
                   </FormItem>
                 )}
               />{' '}
-              <Button type="submit">Register</Button>
+              <Button type="submit" disabled={loading}>
+                Register
+              </Button>
             </form>
           </Form>
         </CardContent>
